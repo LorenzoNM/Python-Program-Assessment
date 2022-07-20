@@ -10,18 +10,43 @@ asked = []
 score = 0
 questions = {
     1: [
-        "What is this game", "Fortnite", "Halo", "CSGO", "Rainbow Six Siege",
-        "Fortnite", 0
+        "Which is the most popular Battle Royale", "Fortnite", "Apex Legends", "Pubg", "Call of Duty WZ",
+        "Apex Legends", 2
     ],
-    2: ["Question", "Choice", "Choice", "Choice", "Choice", "", 1],
-    3: ["Question", "Choice", "Choice", "Choice", "Choice", "Answer", 2],
-    4: ["Question", "Choice", "Choice", "Choice", "Choice", "Answer", 2],
-    5: ["Question", "Choice", "Choice", "Choice", "Choice", "Answer", 3],
-    6: ["Question", "Choice", "Choice", "Choice", "Choice", "Answer", 3],
-    7: ["Question", "Choice", "Choice", "Choice", "Choice", "Answer", 4],
-    8: ["Question", "Choice", "Choice", "Choice", "Choice", "Answer", 1],
-    9: ["Question", "Choice", "Choice", "Choice", "Choice", "Answer", 3],
-    10: ["Question", "Choice", "Choice", "Choice", "Choice", "Answer", 1],
+    2: [
+        "The Drum Gun is inspired by?(Fortnite)", "Thompson SMG", "Trench Sweeper",
+        "Tommy Gun", "All of Above", "All of Above", 4
+    ],
+    3: [
+        "Which character says 'the AllFather' (Apex L) ", "Fuse", "Gibraltar",
+        "Lifeline", "Bloodhound", "Bloodhound", 4
+    ],
+    4: [
+        "Who is the enemy out of the three (Call of Duty MW2)", "Ghost", "Makarov",
+        "Soap", "Captain Price", "Makarov", 2
+    ],
+    5: [
+        "Which game is the name 'Echo'from", "Warframe", "Overwatch", "Spacelords", "Paladins",
+        "Warframe", 4
+    ],
+    6: [
+        "Which deals the most Damage (one bullet&no headshots) (CSGO)",
+        "USP-S", "Desert Eagle", "R8 Revolver", "P2000", "R8 Revolver", 3
+    ],
+    7: [
+        "Which deals the most Damage (one bullet&no headshots) (Apex L)",
+        "Longbow", "Sentinel", "Wingman", "Triple Take", "Sentinel", 2
+    ],
+    8: [
+        "Which game has a better respawn mechanic", "Pubg", "Call of Duty WZ",
+        "Apex Legends", "Fortnite", "Call of Duty WZ", 2
+    ],
+    9: [
+        "Who is the Monkey in Overwatch?", "Winston", "Bob", "Sigma", "Wrecking Ball",
+        "Winston", 1
+    ],
+    10:
+    ["How many characters in Valorant(2022)", "21", "18", "19", "20", "19", 3],
 }
 
 
@@ -63,16 +88,17 @@ class TitlePage:
 
     def name_collection(self):
         name = self.username_box.get()
-        if str. isalpha(name):
-          if len(name) < 1:
-              names.append(name)
-            
-          elif len(name) > 9:
-            messagebox.showerror("Error","Only Less Than 10 Letters")
-            return()
+        if str.isalpha(name):
+            if len(name) < 1:
+                names.append(name)
+
+            elif len(name) > 9:
+                messagebox.showerror("Error", "Only Less Than 10 Letters")
+                return ()
         else:
-          messagebox.showerror("Error","Only Letters and No Spaces and No Blanks")
-          return()    
+            messagebox.showerror("Error",
+                                 "Only Letters and No Spaces and No Blanks")
+            return ()
         self.exit_button.after(0, self.exit_button.destroy)
         self.play_button.after(0, self.play_button.destroy)
         self.username_box.after(0, self.username_box.destroy)
@@ -91,11 +117,11 @@ class QuizPage:
 
         self.questions_text = Label(parent,
                                     text=questions[inquiry][0],
-                                    font=("Courier", "16"),
+                                    font=("Courier", "9"),
                                     background="LightYellow")
-        self.questions_text.place(x=120, y=30, height=50)
+        self.questions_text.place(x=0, y=100, height=150, width=550)
 
-        self.VB1 = IntVar()
+        self.vb1 = IntVar()
         self.bt1 = Radiobutton(parent,
                                text=questions[inquiry][1],
                                font=("Courier", "13"),
@@ -103,11 +129,11 @@ class QuizPage:
                                value=1,
                                padx=10,
                                pady=10,
-                               variable=self.VB1,
+                               variable=self.vb1,
                                indicator=1,
                                background="LightYellow",
                                border=4)
-        self.bt1.place(x=35, y=300)
+        self.bt1.place(x=35, y=300, width=180)
 
         self.bt2 = Radiobutton(parent,
                                text=questions[inquiry][2],
@@ -116,11 +142,11 @@ class QuizPage:
                                value=2,
                                padx=10,
                                pady=10,
-                               variable=self.VB1,
+                               variable=self.vb1,
                                indicator=1,
                                background="LightYellow",
                                border=4)
-        self.bt2.place(x=290, y=300)
+        self.bt2.place(x=270, y=300, width=200)
 
         self.bt3 = Radiobutton(parent,
                                text=questions[inquiry][3],
@@ -129,10 +155,10 @@ class QuizPage:
                                value=3,
                                padx=10,
                                pady=10,
-                               variable=self.VB1,
+                               variable=self.vb1,
                                background="LightYellow",
                                border=4)
-        self.bt3.place(x=35, y=400)
+        self.bt3.place(x=35, y=400, width=180)
 
         self.bt4 = Radiobutton(parent,
                                text=questions[inquiry][4],
@@ -141,11 +167,11 @@ class QuizPage:
                                value=4,
                                padx=10,
                                pady=10,
-                               variable=self.VB1,
+                               variable=self.vb1,
                                indicator=1,
                                background="LightYellow",
                                border=4)
-        self.bt4.place(x=290, y=400)
+        self.bt4.place(x=270, y=400, width=200)
 
         self.quiz_instance = Button(parent,
                                     text="Next",
@@ -159,7 +185,7 @@ class QuizPage:
                                   bg="red2",
                                   border=4)
         self.quit_button.place(x=20, y=22.5, height=60, width=60)
-
+        
 
 random_gen()
 if __name__ == "__main__":
