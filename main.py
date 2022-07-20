@@ -120,6 +120,11 @@ class QuizPage:
                                     font=("Courier", "9"),
                                     background="LightYellow")
         self.questions_text.place(x=0, y=100, height=150, width=550)
+        self.correct_answer = Label(parent, text= ("-----"),
+                                  
+                                    font=("Courier", "9"),
+                                    background="LightYellow")
+        self.correct_answer.place(x=100, y=25, height=25, width=300)
 
         self.vb1 = IntVar()
         self.bt1 = Radiobutton(parent,
