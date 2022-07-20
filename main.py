@@ -3,6 +3,7 @@ import random
 from PIL import Image, ImageTk
 names = []
 global questions
+global bg_image
 asked = []
 score=0
 questions = {
@@ -64,6 +65,7 @@ questions = {
         "Choice",
         "Choice",
         "Choice",
+        "Choice",
         "Answer", 1],}
 def random_gen():
  global inquiry
@@ -79,18 +81,19 @@ class TitlePage:
 
    background_color="DarkBlue"
   
-   self.play_button = Button(parent, text="PLAY", font=("Courier", "13", "bold"),bg = "Green", command=self.name_collection)
+   self.play_button = Button(parent, text="PLAY", font=("Courier", "13", "bold"),bg = "Green", command=self.name_collection,border= 4)
    self.play_button.place(x=280, y=375,height= 50, width=155)
 
-   self.exit_button = Button(parent, text="EXIT", font=("Courier", "13", "bold"), bg="Red")
+   self.exit_button = Button(parent, text="EXIT", font=("Courier", "13", "bold"), bg="Red",border= 4)
    self.exit_button.place(x=65, y=375,height= 50, width=155)
    def tmp_text(all):
      self.username_box.delete(0,"end")
+     
    self.username_box=Entry(parent,borderwidth=2)
    self.username_box.insert(0, "Enter Username here")
    self.username_box.place(x=160, y=287.5,height= 50, width=180)
-
    self.username_box.bind("<FocusIn>", tmp_text)
+
 
 
        
@@ -106,39 +109,41 @@ class TitlePage:
 class QuizPage:
  def __init__(self, parent):
    background_color="DarkBlue"
+   global bg_image
    bg_image = Image.open("1.png")
    bg_image = bg_image.resize((500,500), Image.ANTIALIAS)
    bg_image = ImageTk.PhotoImage(bg_image) 
    bg_frame= Label(system, image=bg_image)
    bg_frame.place(x=0, y=2, relwidth=1, relheight=1)
    
-   self.questions_text=Label(parent, text=questions[inquiry][0], font=("Tw Cen MT","16"),bg= background_color)
-   self.questions_text.place(x=65, y=375,height= 50, width=155)
+   self.questions_text=Label(parent, text=questions[inquiry][0], font=("Courier", "16"),background ="LightYellow")
+   self.questions_text.place(x=120, y=30,height= 50)
 
 
-   self.var1 = IntVar()
-   self.rb1= Radiobutton(parent, text=questions[inquiry][1], font=("Helvetica","12"),bg= background_color, value=1, padx=10, pady=10, variable=self.var1, indicator= 1, background = "light blue")
-   self.rb1.grid(row=2, sticky=W)
+   self.VB1 = IntVar()
+   self.bt1= Radiobutton(parent, text=questions[inquiry][1], font=("Courier", "13"),bg= background_color, value=1, padx=10, pady=10, variable=self.VB1, indicator= 1, background = "LightYellow",border= 4)
+   self.bt1.place(x=35, y=300)
 
-   self.rb2= Radiobutton(parent, text=questions[inquiry][2], font=("Helvetica","12"),bg= background_color, value=2, padx=10, pady=10, variable=self.var1, indicator= 1, background = "light blue")
-   self.rb2.grid(row=3, sticky=W)
+   self.bt2= Radiobutton(parent, text=questions[inquiry][2], font=("Courier", "13"),bg= background_color, value=2, padx=10, pady=10, variable=self.VB1, indicator= 1, background = "LightYellow",border= 4)
+   self.bt2.place(x=290, y=300)
 
-   self.rb3= Radiobutton(parent, text=questions[inquiry][3], font=("Helvetica","12"),bg= background_color, value=3, padx=10, pady=10, variable=self.var1, background = "light blue")
-   self.rb3.grid(row=4, sticky=W)
+   self.bt3= Radiobutton(parent, text=questions[inquiry][3], font=("Courier", "13"),bg= background_color, value=3, padx=10, pady=10, variable=self.VB1, background = "LightYellow",border= 4)
+   self.bt3.place(x=35, y=400)
 
-   self.rb4= Radiobutton(parent, text=questions[inquiry][4], font=("Helvetica","12"),bg= background_color, value=4, padx=10, pady=10, variable=self.var1, indicator= 1, background = "light blue")
-   self.rb4.grid(row=5, sticky=W)
+   self.bt4= Radiobutton(parent, text=questions[inquiry][4], font=("Courier", "13"),bg= background_color, value=4, padx=10, pady=10, variable=self.VB1, indicator= 1, background ="LightYellow",border= 4)
+   self.bt4.place(x=290, y=400)
 
-   self.quiz_instance=Button(parent, text="Confirm", font=("Helvetica","13","bold"), bg="SpringGreen3")
-   self.quiz_instance.place(x=65, y=375,height= 50, width=155)
-
+   self.quiz_instance=Button(parent, text="Next", font=("Courier", "13", "bold"), bg="Green",border= 4)
+   self.quiz_instance.place(x=425, y=22.5,height= 60, width=60)
+   self.quit_button=Button(parent, text="Quit", font=("Courier", "13", "bold"),bg="red2",border= 4)
+   self.quit_button.place(x=20, y=22.5,height= 60, width=60)
 random_gen()
 if __name__ == "__main__":
    system = Tk()
    system.geometry("500x500")
 
    system.title("Shooting Game Quiz")
-   bg_image = Image.open("2.png")
+   bg_image = Image.open("Title.png")
    bg_image = bg_image.resize((500,500), Image.ANTIALIAS)
    bg_image = ImageTk.PhotoImage(bg_image) 
    bg_frame= Label(system, image=bg_image)
