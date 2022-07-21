@@ -10,27 +10,27 @@ asked = []
 score = 0
 questions = {
     1: [
-        "Which is the most popular Battle Royale", "Fortnite", "Apex Legends", "Pubg", "Call of Duty WZ",
-        "Apex Legends", 2
+        "Which is the most popular Battle Royale(2022)", "Fortnite", "Apex Legends",
+        "Pubg", "Call of Duty WZ", "Apex Legends", 2
     ],
     2: [
-        "The Drum Gun is inspired by?(Fortnite)", "Thompson SMG", "Trench Sweeper",
-        "Tommy Gun", "All of Above", "All of Above", 4
+        "The Drum Gun is inspired by?(Fortnite)", "Thompson SMG",
+        "Trench Sweeper", "Tommy Gun", "All of Above", "All of Above", 4
     ],
     3: [
-        "Which character says 'the AllFather' (Apex L) ", "Fuse", "Gibraltar",
+        "Which character often says 'the AllFather' (Apex L) ", "Fuse", "Gibraltar",
         "Lifeline", "Bloodhound", "Bloodhound", 4
     ],
     4: [
-        "Who is the enemy out of the three (Call of Duty MW2)", "Ghost", "Makarov",
-        "Soap", "Captain Price", "Makarov", 2
+        "Who is an enemy out of the three (Call of Duty MW2)", "Makarov",
+        "Ghost", "Soap", "Captain Price", "Makarov", 1
     ],
     5: [
-        "Which game is the name 'Echo'from", "Warframe", "Overwatch", "Spacelords", "Paladins",
-        "Warframe", 4
+        "Which game has the character called 'Echo'", "Warframe", "Overwatch",
+        "Spacelords", "Paladins", "Overwatch", 2
     ],
     6: [
-        "Which deals the most Damage (one bullet&no headshots) (CSGO)",
+        "Which deals the most Damage (one bullet & no headshots) (CSGO)",
         "USP-S", "Desert Eagle", "R8 Revolver", "P2000", "R8 Revolver", 3
     ],
     7: [
@@ -38,12 +38,12 @@ questions = {
         "Longbow", "Sentinel", "Wingman", "Triple Take", "Sentinel", 2
     ],
     8: [
-        "Which game has a better respawn mechanic", "Pubg", "Call of Duty WZ",
+        "Which game does the term 'Gulag' come from", "Pubg", "Call of Duty WZ",
         "Apex Legends", "Fortnite", "Call of Duty WZ", 2
     ],
     9: [
-        "Who is the Monkey in Overwatch?", "Winston", "Bob", "Sigma", "Wrecking Ball",
-        "Winston", 1
+        "Who is the Monkey in Overwatch?", "Winston", "Bob", "Sigma",
+        "Wrecking Ball", "Winston", 1
     ],
     10:
     ["How many characters in Valorant(2022)", "21", "18", "19", "20", "19", 3],
@@ -107,7 +107,7 @@ class TitlePage:
 
 class QuizPage:
     def __init__(self, parent):
-        background_color = "DarkBlue"
+
         global bg_image
         bg_image = Image.open("1.png")
         bg_image = bg_image.resize((500, 500), Image.ANTIALIAS)
@@ -117,20 +117,22 @@ class QuizPage:
 
         self.questions_text = Label(parent,
                                     text=questions[inquiry][0],
+                                    font=("Courier", "11"),
+                                    background="LightYellow")
+        self.questions_text.place(x=1, y=100, height=150, width=550)
+        self.correct_answer_score = Label(parent,
+                                    text=("-----"),
                                     font=("Courier", "9"),
                                     background="LightYellow")
-        self.questions_text.place(x=0, y=100, height=150, width=550)
-        self.correct_answer = Label(parent, text= ("-----"),
-                                  
-                                    font=("Courier", "9"),
-                                    background="LightYellow")
-        self.correct_answer.place(x=100, y=25, height=25, width=300)
+        self.correct_answer_score.place(x=100, y=25, height=25, width=300)
+
+
 
         self.vb1 = IntVar()
         self.bt1 = Radiobutton(parent,
                                text=questions[inquiry][1],
                                font=("Courier", "13"),
-                               bg=background_color,
+                               
                                value=1,
                                padx=10,
                                pady=10,
@@ -143,7 +145,7 @@ class QuizPage:
         self.bt2 = Radiobutton(parent,
                                text=questions[inquiry][2],
                                font=("Courier", "13"),
-                               bg=background_color,
+                               
                                value=2,
                                padx=10,
                                pady=10,
@@ -156,7 +158,7 @@ class QuizPage:
         self.bt3 = Radiobutton(parent,
                                text=questions[inquiry][3],
                                font=("Courier", "13"),
-                               bg=background_color,
+                              
                                value=3,
                                padx=10,
                                pady=10,
@@ -168,7 +170,7 @@ class QuizPage:
         self.bt4 = Radiobutton(parent,
                                text=questions[inquiry][4],
                                font=("Courier", "13"),
-                               bg=background_color,
+
                                value=4,
                                padx=10,
                                pady=10,
@@ -178,19 +180,60 @@ class QuizPage:
                                border=4)
         self.bt4.place(x=270, y=400, width=200)
 
-        self.quiz_instance = Button(parent,
-                                    text="Next",
-                                    font=("Courier", "13", "bold"),
-                                    bg="Green",
-                                    border=4)
-        self.quiz_instance.place(x=425, y=22.5, height=60, width=60)
+        self.quiz_program = Button(parent,
+                                text="Next",
+                                font=("Courier", "13", "bold"),
+                                bg="Green",
+                                border=4,command=self.answer_check)
+        self.quiz_program.place(x=425, y=22.5, height=60, width=60)
         self.quit_button = Button(parent,
                                   text="Quit",
                                   font=("Courier", "13", "bold"),
                                   bg="red2",
                                   border=4)
         self.quit_button.place(x=20, y=22.5, height=60, width=60)
-        
+
+    def questions_system(self):
+        random_gen()
+        self.vb1.set(0)
+        self.questions_text.config(text=questions[inquiry][0])
+        self.bt1.config(text=questions[inquiry][1])
+        self.bt2.config(text=questions[inquiry][2])
+        self.bt3.config(text=questions[inquiry][3])
+        self.bt4.config(text=questions[inquiry][4])
+
+    def answer_check(self):
+        global score
+        scr_label = self.correct_answer_score
+        answer = self.vb1.get()
+        if len(asked) > 9:
+            if answer == questions[inquiry][6]:
+                score += 1
+                scr_label.configure(text=score)
+                self.quiz_program.config(text="Next")
+            else:
+                score += 0
+                scr_label.configure(text="The correct answer is: " +
+                                    questions[inquiry][5])
+                self.quiz_program.config(text="Next")
+              
+        else:
+            if answer == 0:
+                self.correct_answer_score.config(text= "Try again no option submitted")
+                answer = self.vb1.get()
+            else:
+                if answer == questions[inquiry][6]:
+                    score += 1
+                    scr_label.configure(text=score)
+                    self.quiz_program.config(text="Next")
+                    self.questions_system()
+                else:
+                    score += 0
+                    scr_label.configure(text="The correct answer is: " +
+                                        questions[inquiry][5])
+                    self.quiz_program.config(text="Next")
+                    self.questions_system()
+
 
 random_gen()
 if __name__ == "__main__":
