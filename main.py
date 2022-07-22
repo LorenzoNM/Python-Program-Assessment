@@ -190,7 +190,7 @@ class QuizPage:
                                   text="Quit",
                                   font=("Courier", "13", "bold"),
                                   bg="red2",
-                                  border=4)
+                                  border=4,command=self.ending)
         self.quit_button.place(x=20, y=22.5, height=60, width=60)
 
     def questions_system(self):
@@ -210,12 +210,14 @@ class QuizPage:
             if answer == questions[inquiry][6]:
                 score += 1
                 scr_label.configure(text=score)
-                self.quiz_program.config(text="Next")
+                self.quiz_program.config(text="Next",command=self.ending)
+                          
             else:
                 score += 0
                 scr_label.configure(text="The correct answer is: " +
                                     questions[inquiry][5])
-                self.quiz_program.config(text="Next")
+                self.quiz_program.config(text="Next",command=self.ending)
+                
               
         else:
             if answer == 0:
@@ -233,6 +235,43 @@ class QuizPage:
                                         questions[inquiry][5])
                     self.quiz_program.config(text="Next")
                     self.questions_system()
+    def ending(self):
+        system.withdraw()
+        ending_scrn = EndPage()
+
+class EndPage:
+    def __init__(self):
+
+        background = "DarkBlue"
+        self.quizend_box = Toplevel(system)
+        self.quizend_box.title("Ending Page")
+
+        self.endpage_frame = Frame(self.quizend_box,
+                               width=150,
+                               height=400,
+                               bg=background)
+        self.endpage_frame.grid()
+
+        end_text = Label(self.endpage_frame,
+                            text="Scoreboard",
+                            font=("Courier", "25", "bold"),
+                            bg=("LightYellow"),
+                            pady=15)
+        end_text.grid(row=0)
+
+        exit_button = Button(self.endpage_frame,
+                             text="Exit",
+                             width=50,
+                             bg="Red",
+                             font=("Courier", "15", "bold"),
+                             command=self.remove_end)
+        exit_button.grid(row=4, pady=20)
+
+
+    def remove_end(self):
+        self.quizend_box.destroy()
+
+
 
 
 random_gen()
