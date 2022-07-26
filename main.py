@@ -2,7 +2,7 @@ from tkinter import *
 import random
 from PIL import Image, ImageTk
 from tkinter import messagebox
-
+global names
 names = []
 global questions
 global bg_image
@@ -67,7 +67,7 @@ class TitlePage:
                                   text="PLAY",
                                   font=("Courier", "13", "bold"),
                                   bg="Green",
-                                  command=self.name_collection,
+                                  command=self.name_check,
                                   border=4)
         self.play_button.place(x=280, y=375, height=50, width=155)
 
@@ -82,16 +82,19 @@ class TitlePage:
             self.username_box.delete(0, "end")
 
         self.username_box = Entry(parent, borderwidth=2)
-        self.username_box.insert(0, "Enter Username here")
+        self.username_box.insert(10, "Enter Username here")
         self.username_box.place(x=160, y=287.5, height=50, width=180)
         self.username_box.bind("<FocusIn>", tmp_text)
 
-    def name_collection(self):
+    def name_check(self):
         name = self.username_box.get()
         if str.isalpha(name):
-            if len(name) < 1:
+            if len(name) < 1:        
                 names.append(name)
-
+                self.exit_button.after(0, self.exit_button.destroy)
+                self.play_button.after(0, self.play_button.destroy)
+                self.username_box.after(0, self.username_box.destroy)
+                QuizPage(system)
             elif len(name) > 9:
                 messagebox.showerror("Error", "Only Less Than 10 Letters")
                 return ()
@@ -105,9 +108,11 @@ class TitlePage:
         QuizPage(system)
 
 
+
 class QuizPage:
     def __init__(self, parent):
-
+      
+        global names
         global bg_image
         bg_image = Image.open("1.png")
         bg_image = bg_image.resize((500, 500), Image.ANTIALIAS)
@@ -237,7 +242,30 @@ class QuizPage:
                     self.questions_system()
     def ending(self):
         system.withdraw()
+        username = names[0]
+        file = open("Scoreboard.txt", "a")
+        file.write(str(score))
+        file.write(" - ")
+        file.write(username + "\n")
+        file.close()
+
+        openfile = open("Scoreboard.txt", "r")
+        namelist = openfile.readlines()
+        namelist.sort()
+        lead = []
+        leading5 = (namelist[-5:])
+        for line in leading5:
+            point = line.split(" - ")
+            lead.append((int(point[0]), point[1]))
+        file.close()
+        lead.sort()
+        lead.reverse()
+        top5_string = ""
+        for i in range(len(lead)):
+            top5_string += "{} - {}\n".format(lead[i][0], lead[i][1])
+        print(top5_string)
         ending_scrn = EndPage()
+        ending_scrn.endscorelabel.config(text=top5_string)
 
 class EndPage:
     def __init__(self):
@@ -266,7 +294,14 @@ class EndPage:
                              font=("Courier", "15", "bold"),
                              command=self.remove_end)
         exit_button.grid(row=4, pady=20)
-
+        self.endscorelabel = Label(self.endpage_frame,
+                               text="1st Place Available",
+                               font=("Courier", "20"),
+                               width=40,
+                               bg=("LightYellow"),
+                               padx=10,
+                               pady=10)
+        self.endscorelabel.grid(column=0, row=2)
 
     def remove_end(self):
         self.quizend_box.destroy()
