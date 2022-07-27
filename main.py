@@ -242,30 +242,8 @@ class QuizPage:
                     self.questions_system()
     def ending(self):
         system.withdraw()
-        username = names[0]
-        file = open("Scoreboard.txt", "a")
-        file.write(str(score))
-        file.write(" - ")
-        file.write(username + "\n")
-        file.close()
-
-        openfile = open("Scoreboard.txt", "r")
-        namelist = openfile.readlines()
-        namelist.sort()
-        lead = []
-        leading5 = (namelist[-5:])
-        for line in leading5:
-            point = line.split(" - ")
-            lead.append((int(point[0]), point[1]))
-        file.close()
-        lead.sort()
-        lead.reverse()
-        top5_string = ""
-        for i in range(len(lead)):
-            top5_string += "{} - {}\n".format(lead[i][0], lead[i][1])
-        print(top5_string)
+       
         ending_scrn = EndPage()
-        ending_scrn.endscorelabel.config(text=top5_string)
 
 class EndPage:
     def __init__(self):
@@ -281,7 +259,7 @@ class EndPage:
         self.endpage_frame.grid()
 
         end_text = Label(self.endpage_frame,
-                            text="Scoreboard",
+                            text="Thanks for playing",
                             font=("Courier", "25", "bold"),
                             bg=("LightYellow"),
                             pady=15)
@@ -295,7 +273,7 @@ class EndPage:
                              command=self.remove_end)
         exit_button.grid(row=4, pady=20)
         self.endscorelabel = Label(self.endpage_frame,
-                               text="1st Place Available",
+                               text="Please give your feedback",
                                font=("Courier", "20"),
                                width=40,
                                bg=("LightYellow"),
